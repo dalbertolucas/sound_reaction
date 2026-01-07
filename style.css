@@ -49,7 +49,9 @@ body{
 }
 
 .panel{
-  width: min(560px, 100%);
+  width: min(560px, 88%);
+  max-height: 95dvh;
+  overflow-y: auto;
   border: 1px solid #eee;
   border-radius: 16px;
   padding: 18px;
@@ -327,3 +329,4 @@ body{
 }
 
 .hidden{ display:none !important; }
+
