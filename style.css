@@ -21,7 +21,8 @@ body{
 
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  min-height: 100dvh;
+  padding: 4dvh 0;
 }
 
 /* topo */
@@ -329,4 +330,5 @@ body{
 }
 
 .hidden{ display:none !important; }
+
 
