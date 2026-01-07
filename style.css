@@ -18,16 +18,13 @@ body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: #fff;
   color: #111;
-
-  display: flex;
-  flex-direction: column;
   min-height: 100dvh;
-  padding: 4dvh 0;
 }
+
+.hidden{ display:none !important; }
 
 /* topo */
 .top-image{
-  flex: 0 0 auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -43,15 +40,15 @@ body{
 
 /* screens */
 .screen{
-  flex: 1 1 auto;
+  height: calc(100dvh - 98px);
   display: grid;
   place-items: center;
-  padding: 12px;
+  padding: 8px;
 }
 
 .panel{
-  width: min(560px, 88%);
-  max-height: 95dvh;
+  width: min(560px, 95%);
+  max-height: 95%;
   overflow-y: auto;
   border: 1px solid #eee;
   border-radius: 16px;
@@ -93,16 +90,46 @@ body{
   width: 100%;
 }
 
+/* buttons */
+.action-btn{
+  font-family: "SpaceBdBT", monospace;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.action-btn:disabled{ opacity: 0.5; cursor: not-allowed; }
 
-.micro{
-  margin-top: 10px;
-  font-size: 13px;
-  opacity: .75;
+.start-btn{ background: #0a7a00; border-color: #0a7a00; }
+.stop-btn{ background: #8b0000; border-color: #8b0000; }
+.ghost-btn{ background: #fff; color: #000; border-color: #000; }
+
+/* ===== MODO JOGO =====
+   Aqui é onde resolve o seu pedido:
+   - o bloco inteiro do jogo fica em 75%
+   - sem compensar largura, então ele realmente ocupa menos espaço
+*/
+.game{
+  height: calc(100dvh - 98px);
+  display: grid;
+  place-items: start center;
+  padding: 10px 0;
+  overflow: hidden;
 }
 
-/* top HUD */
+.game-stage{
+  width: 100%;
+  transform: scale(0.75);
+  transform-origin: top center;
+}
+
+/* HUD do jogo */
 .top{
-  flex: 0 0 auto;
   padding: 14px 16px;
   display: flex;
   gap: 16px;
@@ -110,6 +137,7 @@ body{
   justify-content: space-between;
   flex-wrap: wrap;
   border-bottom: 1px solid #eee;
+  background: #fff;
 }
 
 .controls{
@@ -142,55 +170,11 @@ body{
   margin-bottom: 6px;
 }
 
-.hud-value{
-  font-size: 30px;
-}
+.hud-value{ font-size: 30px; }
 
-/* buttons */
-.action-btn{
-  font-family: "SpaceBdBT", monospace;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid #000;
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-  letter-spacing: 1px;
-}
-
-.action-btn:disabled{
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.start-btn{
-  background: #0a7a00;
-  border-color: #0a7a00;
-}
-
-.stop-btn{
-  background: #8b0000;
-  border-color: #8b0000;
-}
-
-.ghost-btn{
-  background: #fff;
-  color: #000;
-  border-color: #000;
-}
-
-/* game wrapper */
-.game{
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
+/* arena */
 .arena{
-  flex: 1 1 auto;
+  height: calc(100dvh - 98px);
   min-height: 0;
   position: relative;
   display: grid;
@@ -244,7 +228,7 @@ body{
   border-radius: 14px;
 }
 
-/* end screen boxes */
+/* tela final */
 .end-stats{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -275,7 +259,6 @@ body{
 .blue-box{ border-left: 6px solid #0b3d91; }
 .red-box{ border-left: 6px solid #8b0000; }
 
-/* destaque vencedor */
 .winner-banner{
   border-radius: 16px;
   padding: 14px 14px;
@@ -290,20 +273,9 @@ body{
   font-size: 26px;
 }
 
-.winner-blue{
-  background: rgba(11,61,145,.12);
-  border-color: rgba(11,61,145,.35);
-}
-
-.winner-red{
-  background: rgba(139,0,0,.12);
-  border-color: rgba(139,0,0,.35);
-}
-
-.winner-tie{
-  background: rgba(0,0,0,.06);
-  border-color: rgba(0,0,0,.12);
-}
+.winner-blue{ background: rgba(11,61,145,.12); border-color: rgba(11,61,145,.35); }
+.winner-red{ background: rgba(139,0,0,.12); border-color: rgba(139,0,0,.35); }
+.winner-tie{ background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.12); }
 
 /* language toggle */
 .lang-toggle{
@@ -328,7 +300,3 @@ body{
   color: #fff;
   border-color: #000;
 }
-
-.hidden{ display:none !important; }
-
-

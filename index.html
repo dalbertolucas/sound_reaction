@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- IMAGEM NO TOPO (opcional) -->
   <div class="top-image">
     <img src="assets/mach.jpg" alt="Mach One" />
   </div>
@@ -19,90 +18,87 @@
       <div class="panel-top">
         <h1 class="title" data-i18n="title">Beep Reaction Duel</h1>
 
-        <div class="lang-toggle" aria-label="Language">
+        <div class="lang-toggle">
           <button type="button" class="lang-btn active" data-lang="pt">PT</button>
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <p class="desc" data-i18n="start_desc">
-        O jogo dura 30 segundos. Dentro desse tempo, tocarão 5 beeps em momentos aleatórios (cada partida muda).
-        Após cada beep, quem tocar primeiro ganha 5 pontos. Se tocar antes do beep, perde 2 pontos.
-        No final dos 30 segundos, toca um último beep: o primeiro toque após ele vale 12 pontos.
-      </p>
+      <p class="desc" data-i18n="start_desc"></p>
 
       <div class="actions">
         <button id="startBtn" class="action-btn start-btn" data-i18n="start_btn">INICIAR</button>
       </div>
 
-      <p class="hint" data-i18n="developed_by">Developed by Mach One Planalto.</p>
+      <p class="hint">Developed by Mach One Planalto.</p>
     </div>
   </section>
 
-  <!-- TELA DO JOGO (SEM TEMPO / SEM CONTADOR DE BEEPS) -->
+  <!-- TELA DO JOGO (75%) -->
   <section id="gameScreen" class="game hidden">
-    <header class="top">
-      <div class="controls">
-        <button id="stopBtn" class="action-btn stop-btn" disabled data-i18n="stop_btn">STOP</button>
-        <button id="menuBtn" class="action-btn ghost-btn" data-i18n="menu_btn">MENU</button>
-      </div>
-
-      <div class="stats">
-        <div class="hud">
-          <div class="hud-label" data-i18n="blue_label">BLUE</div>
-          <div class="hud-value"><span id="scoreBlue">0</span></div>
+    <div class="game-stage">
+      <header class="top">
+        <div class="controls">
+          <button id="stopBtn" class="action-btn stop-btn" disabled data-i18n="stop_btn">STOP</button>
+          <button id="menuBtn" class="action-btn ghost-btn" data-i18n="menu_btn">MENU</button>
         </div>
 
-        <div class="hud">
-          <div class="hud-label" data-i18n="red_label">RED</div>
-          <div class="hud-value"><span id="scoreRed">0</span></div>
+        <div class="stats">
+          <div class="hud">
+            <div class="hud-label" data-i18n="blue_label">BLUE</div>
+            <div class="hud-value"><span id="scoreBlue">0</span></div>
+          </div>
+
+          <div class="hud">
+            <div class="hud-label" data-i18n="red_label">RED</div>
+            <div class="hud-value"><span id="scoreRed">0</span></div>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <main class="arena">
-      <div id="blueZone" class="zone blue" aria-label="Blue player zone">
-        <div class="zone-label" data-i18n="tap_here">TOQUE AQUI</div>
-      </div>
+      <main class="arena">
+        <div id="blueZone" class="zone blue">
+          <div class="zone-label" data-i18n="tap_here">TOQUE AQUI</div>
+        </div>
 
-      <div id="redZone" class="zone red" aria-label="Red player zone">
-        <div class="zone-label" data-i18n="tap_here">TOQUE AQUI</div>
-      </div>
+        <div id="redZone" class="zone red">
+          <div class="zone-label" data-i18n="tap_here">TOQUE AQUI</div>
+        </div>
 
-      <div class="center-overlay">
-        <div id="statusText" class="status" data-i18n="status_waiting">Aguardando beep…</div>
-      </div>
-    </main>
+        <div class="center-overlay">
+          <div id="statusText" class="status" data-i18n="status_waiting"></div>
+        </div>
+      </main>
+    </div>
   </section>
 
   <!-- TELA FINAL -->
   <section id="endScreen" class="screen hidden">
     <div class="panel">
-      <h1 class="title" data-i18n="game_over">Fim de jogo</h1>
+      <h1 class="title" data-i18n="game_over"></h1>
 
-      <!-- BANNER DO VENCEDOR (GRANDE) -->
       <div id="winnerBanner" class="winner-banner winner-tie">
         <div id="winnerText" class="winner-text">—</div>
       </div>
 
       <div class="end-stats">
         <div class="end-box blue-box">
-          <div class="label" data-i18n="blue_label">BLUE</div>
+          <div class="label" data-i18n="blue_label"></div>
           <div class="big" id="finalBlue">0</div>
         </div>
 
         <div class="end-box red-box">
-          <div class="label" data-i18n="red_label">RED</div>
+          <div class="label" data-i18n="red_label"></div>
           <div class="big" id="finalRed">0</div>
         </div>
       </div>
 
       <div class="actions">
-        <button id="playAgainBtn" class="action-btn start-btn" data-i18n="play_again">JOGAR DE NOVO</button>
-        <button id="menuFromEndBtn" class="action-btn ghost-btn" data-i18n="menu_btn">MENU</button>
+        <button id="playAgainBtn" class="action-btn start-btn" data-i18n="play_again"></button>
+        <button id="menuFromEndBtn" class="action-btn ghost-btn" data-i18n="menu_btn"></button>
       </div>
 
-      <p class="hint" data-i18n="developed_by">Developed by Mach One Planalto.</p>
+      <p class="hint">Developed by Mach One Planalto.</p>
     </div>
   </section>
 

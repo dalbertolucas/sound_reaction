@@ -1,14 +1,14 @@
-const GAME_TIME = 30;      // segundos
-const BEEPS_COUNT = 5;     // beeps aleatórios dentro dos 30s
-const POINTS_BEEP = 5;     // +5 para quem reage primeiro
-const PENALTY_EARLY = -2;  // -2 se tocar antes do beep
-const POINTS_FINAL = 12;   // +12 no beep final (30s)
+const GAME_TIME = 30;
+const BEEPS_COUNT = 5;
+const POINTS_BEEP = 5;
+const PENALTY_EARLY = -2;
+const POINTS_FINAL = 12;
 
 const i18n = {
   pt: {
     title: "Beep Reaction Duel",
     start_desc:
-      "O jogo dura 30 segundos.\nNesse período, 5 beeps surgem em momentos imprevisíveis.\nCada vez que um beep toca, o jogador mais rápido ganha 5 pontos.\nAtenção: tocar antes do beep faz você perder 2 pontos.\nAo final dos 30 segundos, um último beep toca: o primeiro toque após ele vale 12 pontos.",
+      "O jogo dura 30 segundos. Dentro desse tempo, tocarão 5 beeps em momentos aleatórios (cada partida muda).\nApós cada beep, quem tocar primeiro ganha 5 pontos. Se tocar antes do beep, perde 2 pontos.\nNo final dos 30 segundos, toca um último beep: o primeiro toque após ele vale 12 pontos.",
     start_btn: "INICIAR",
     stop_btn: "PARAR",
     menu_btn: "MENU",
@@ -20,7 +20,6 @@ const i18n = {
     status_final: "ÚLTIMO BEEP!",
     game_over: "Fim de jogo",
     play_again: "JOGAR DE NOVO",
-    developed_by: "Developed by Mach One Planalto.",
     winner_blue: "VENCEDOR: AZUL 🟦",
     winner_red: "VENCEDOR: VERMELHO 🟥",
     winner_tie: "EMPATE",
@@ -28,7 +27,7 @@ const i18n = {
   en: {
     title: "Beep Reaction Duel",
     start_desc:
-      "The game lasts 30 seconds.\nDuring this time, 5 beeps occur at unpredictable moments.\nEach time a beep sounds, the fastest player earns 5 points.\nWarning: tapping before the beep costs you 2 points.\nAt the end of the 30 seconds, a final beep sounds: the first tap after it is worth 12 points.",
+      "The game lasts 30 seconds. During this time, 5 beeps will play at random moments (each match is different).\nAfter each beep, the first player to tap earns 5 points. If you tap before the beep, you lose 2 points.\nAt 30 seconds, a final beep plays: the first tap after it is worth 12 points.",
     start_btn: "START",
     stop_btn: "STOP",
     menu_btn: "MENU",
@@ -40,7 +39,6 @@ const i18n = {
     status_final: "FINAL BEEP!",
     game_over: "Game Over",
     play_again: "PLAY AGAIN",
-    developed_by: "Developed by Mach One Planalto.",
     winner_blue: "WINNER: BLUE 🟦",
     winner_red: "WINNER: RED 🟥",
     winner_tie: "TIE",
@@ -72,9 +70,7 @@ const winnerText = document.getElementById("winnerText");
 const playAgainBtn = document.getElementById("playAgainBtn");
 const menuFromEndBtn = document.getElementById("menuFromEndBtn");
 
-/* ===== idioma ===== */
 let currentLang = loadLang();
-
 function loadLang(){
   const raw = localStorage.getItem("brd_lang");
   return raw === "en" ? "en" : "pt";
@@ -102,22 +98,18 @@ function renderI18n(){
   });
 }
 
-/* ===== estado do jogo ===== */
 let running = false;
-
 let scoreBlue = 0;
 let scoreRed = 0;
 
 let scheduleTimeouts = [];
 let beepTimes = [];
-let nextBeepIndex = 0;
 let armed = false;
 let claimed = false;
 let finalRound = false;
 
 let audioUnlocked = false;
 
-/* ===== util ===== */
 function setRunningUI(isRunning){
   stopBtn.disabled = !isRunning;
   menuBtn.disabled = isRunning;
@@ -151,7 +143,6 @@ function flashZone(zoneEl){
   setTimeout(() => zoneEl.classList.remove("flash"), 120);
 }
 
-/* ===== áudio (beep) ===== */
 function ensureAudioUnlocked(){
   if(audioUnlocked) return;
   try{
@@ -195,7 +186,6 @@ function playBeep(freq = 880, durationMs = 120){
   o.onended = () => ctx.close();
 }
 
-/* ===== geração dos beeps aleatórios ===== */
 function generateRandomBeepTimes(){
   const MIN_T = 2.0;
   const MAX_T = 28.0;
@@ -218,10 +208,8 @@ function generateRandomBeepTimes(){
   return [5, 10, 15, 20, 25];
 }
 
-/* ===== lógica de rodada ===== */
 function updateStatusWaiting(){
-  const dict = i18n[currentLang];
-  statusText.textContent = dict.status_waiting;
+  statusText.textContent = i18n[currentLang].status_waiting;
 }
 
 function armRound(isFinal){
@@ -255,14 +243,12 @@ function awardRed(points){
 function handleTap(player){
   if(!running) return;
 
-  // tocou antes do beep => punição
   if(!armed){
     if(player === "blue") awardBlue(PENALTY_EARLY);
     else awardRed(PENALTY_EARLY);
     return;
   }
 
-  // já teve vencedor nesse beep
   if(claimed) return;
   claimed = true;
 
@@ -278,25 +264,21 @@ function handleTap(player){
   disarmRound();
 }
 
-/* ===== schedule ===== */
 function clearSchedule(){
   for(const t of scheduleTimeouts) clearTimeout(t);
   scheduleTimeouts = [];
 }
 
 function scheduleBeepAt(secondsFromStart, fn){
-  const ms = Math.max(0, Math.floor(secondsFromStart * 1000));
-  scheduleTimeouts.push(setTimeout(fn, ms));
+  scheduleTimeouts.push(setTimeout(fn, Math.max(0, secondsFromStart * 1000)));
 }
 
-/* ===== start/stop/end ===== */
 function resetGameState(){
   running = false;
   armed = false;
   claimed = false;
   finalRound = false;
 
-  nextBeepIndex = 0;
   beepTimes = [];
   clearSchedule();
 
@@ -324,17 +306,14 @@ function startGame(){
   for(let i=0;i<beepTimes.length;i++){
     scheduleBeepAt(beepTimes[i], () => {
       if(!running) return;
-      nextBeepIndex = i;
       armRound(false);
     });
   }
 
-  // beep final (vale 12)
   scheduleBeepAt(GAME_TIME, () => {
     if(!running) return;
     armRound(true);
 
-    // segurança: se ninguém tocar após o final, encerra em 3s
     scheduleBeepAt(GAME_TIME + 3, () => {
       if(running && finalRound && !claimed){
         finishGame();
@@ -376,7 +355,6 @@ function finishGame(){
   showEnd();
 }
 
-/* ===== eventos ===== */
 startBtn.addEventListener("click", startGame);
 stopBtn.addEventListener("click", stopGame);
 
@@ -387,7 +365,6 @@ menuBtn.addEventListener("click", () => {
 });
 
 playAgainBtn.addEventListener("click", startGame);
-
 menuFromEndBtn.addEventListener("click", () => {
   resetGameState();
   showStart();
@@ -403,7 +380,6 @@ document.querySelectorAll(".lang-btn").forEach(btn => {
   });
 });
 
-/* init */
 resetGameState();
 setLang(currentLang);
 showStart();
