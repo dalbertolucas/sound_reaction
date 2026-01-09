@@ -14,27 +14,29 @@
 
   <!-- TELA INICIAL -->
   <section id="startScreen" class="screen">
-    <div class="panel">
-      <div class="panel-top">
-        <h1 class="title" data-i18n="title">Beep Reaction Duel</h1>
+    <div class="menu-stage">
+      <div class="panel">
+        <div class="panel-top">
+          <h1 class="title" data-i18n="title">Beep Reaction Duel</h1>
 
-        <div class="lang-toggle">
-          <button type="button" class="lang-btn active" data-lang="pt">PT</button>
-          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <div class="lang-toggle">
+            <button type="button" class="lang-btn active" data-lang="pt">PT</button>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+          </div>
         </div>
+
+        <p class="desc" data-i18n="start_desc"></p>
+
+        <div class="actions">
+          <button id="startBtn" class="action-btn start-btn" data-i18n="start_btn">INICIAR</button>
+        </div>
+
+        <p class="hint">Developed by Mach One Planalto.</p>
       </div>
-
-      <p class="desc" data-i18n="start_desc"></p>
-
-      <div class="actions">
-        <button id="startBtn" class="action-btn start-btn" data-i18n="start_btn">INICIAR</button>
-      </div>
-
-      <p class="hint">Developed by Mach One Planalto.</p>
     </div>
   </section>
 
-  <!-- TELA DO JOGO (75%) -->
+  <!-- TELA DO JOGO -->
   <section id="gameScreen" class="game hidden">
     <div class="game-stage">
       <header class="top">
@@ -65,6 +67,7 @@
           <div class="zone-label" data-i18n="tap_here">TOQUE AQUI</div>
         </div>
 
+        <!-- status agora fica quase no topo -->
         <div class="center-overlay">
           <div id="statusText" class="status" data-i18n="status_waiting"></div>
         </div>
@@ -74,31 +77,33 @@
 
   <!-- TELA FINAL -->
   <section id="endScreen" class="screen hidden">
-    <div class="panel">
-      <h1 class="title" data-i18n="game_over"></h1>
+    <div class="end-stage">
+      <div class="panel">
+        <h1 class="title" data-i18n="game_over"></h1>
 
-      <div id="winnerBanner" class="winner-banner winner-tie">
-        <div id="winnerText" class="winner-text">—</div>
-      </div>
-
-      <div class="end-stats">
-        <div class="end-box blue-box">
-          <div class="label" data-i18n="blue_label"></div>
-          <div class="big" id="finalBlue">0</div>
+        <div id="winnerBanner" class="winner-banner winner-tie">
+          <div id="winnerText" class="winner-text">—</div>
         </div>
 
-        <div class="end-box red-box">
-          <div class="label" data-i18n="red_label"></div>
-          <div class="big" id="finalRed">0</div>
+        <div class="end-stats">
+          <div class="end-box blue-box">
+            <div class="label" data-i18n="blue_label"></div>
+            <div class="big" id="finalBlue">0</div>
+          </div>
+
+          <div class="end-box red-box">
+            <div class="label" data-i18n="red_label"></div>
+            <div class="big" id="finalRed">0</div>
+          </div>
         </div>
-      </div>
 
-      <div class="actions">
-        <button id="playAgainBtn" class="action-btn start-btn" data-i18n="play_again"></button>
-        <button id="menuFromEndBtn" class="action-btn ghost-btn" data-i18n="menu_btn"></button>
-      </div>
+        <div class="actions">
+          <button id="playAgainBtn" class="action-btn start-btn" data-i18n="play_again"></button>
+          <button id="menuFromEndBtn" class="action-btn ghost-btn" data-i18n="menu_btn"></button>
+        </div>
 
-      <p class="hint">Developed by Mach One Planalto.</p>
+        <p class="hint">Developed by Mach One Planalto.</p>
+      </div>
     </div>
   </section>
 

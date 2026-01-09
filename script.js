@@ -4,6 +4,44 @@ const POINTS_BEEP = 5;
 const PENALTY_EARLY = -2;
 const POINTS_FINAL = 12;
 
+/* ===== UI adaptativa =====
+   Menu/fim: escala 1.0 se couber, reduz se tela apertar
+   Jogo: base 0.75, mas reduz se a tela apertar
+*/
+let menuScale = 1;
+let gameScale = 0.75;
+
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+function getViewportSize(){
+  const vv = window.visualViewport;
+  return {
+    w: vv ? vv.width : window.innerWidth,
+    h: vv ? vv.height : window.innerHeight
+  };
+}
+
+function setCssVar(name, value){
+  document.documentElement.style.setProperty(name, String(value));
+}
+
+function applyResponsiveUIScaling(){
+  const { w, h } = getViewportSize();
+
+  // Base aproximada do painel (menu/fim)
+  const ms = Math.min(1, w / 560, h / 880);
+  menuScale = clamp(ms, 0.82, 1);
+
+  // Jogo: base 0.75, reduz quando necessário
+  // (mantém a cara do jogo, mas evita corte em iPhone/SE)
+  const gs = Math.min(0.75, menuScale * 0.92);
+  gameScale = clamp(gs, 0.62, 0.75);
+
+  setCssVar("--menu-scale", menuScale);
+  setCssVar("--end-scale", menuScale);
+  setCssVar("--game-scale", gameScale);
+}
+
 const i18n = {
   pt: {
     title: "Beep Reaction Duel",
@@ -116,18 +154,21 @@ function setRunningUI(isRunning){
 }
 
 function showStart(){
+  applyResponsiveUIScaling();
   gameScreen.classList.add("hidden");
   endScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
 }
 
 function showGame(){
+  applyResponsiveUIScaling();
   startScreen.classList.add("hidden");
   endScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
 }
 
 function showEnd(){
+  applyResponsiveUIScaling();
   startScreen.classList.add("hidden");
   gameScreen.classList.add("hidden");
   endScreen.classList.remove("hidden");
@@ -380,6 +421,14 @@ document.querySelectorAll(".lang-btn").forEach(btn => {
   });
 });
 
+/* iPhone Safari muda o viewport o tempo todo */
+window.addEventListener("resize", () => applyResponsiveUIScaling());
+if(window.visualViewport){
+  window.visualViewport.addEventListener("resize", () => applyResponsiveUIScaling());
+  window.visualViewport.addEventListener("scroll", () => applyResponsiveUIScaling());
+}
+
 resetGameState();
 setLang(currentLang);
+applyResponsiveUIScaling();
 showStart();
