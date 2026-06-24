@@ -264,7 +264,8 @@ function armRound(isFinal){
   claimed = false;
   finalRound = isFinal;
 
-  statusText.textContent = i18n[currentLang].status_waiting;
+  // Mantém a frase fixa. Não mostra "VALENDO", não apaga e não muda no beep.
+  updateStatusWaiting();
 
   playBeep(
     isFinal ? 1200 : 880,
@@ -275,6 +276,8 @@ function armRound(isFinal){
 function disarmRound(){
   armed = false;
   finalRound = false;
+
+  // Mantém a frase fixa depois que alguém toca.
   updateStatusWaiting();
 }
 
