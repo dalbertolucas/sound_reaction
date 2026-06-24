@@ -330,3 +330,11 @@ body{
   color: #fff;
   border-color: #000;
 }
+
+html[lang="pt-br"] .status-fixed::before{
+  content: "Aguardando beep…";
+}
+
+html[lang="en"] .status-fixed::before{
+  content: "Waiting for beep…";
+}
