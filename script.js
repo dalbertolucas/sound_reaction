@@ -275,7 +275,7 @@ function armRound(isFinal){
 function disarmRound(){
   armed = false;
   finalRound = false;
-  updateStatusWaiting();
+  statusText.textContent = "";
 }
 
 function awardBlue(points){
