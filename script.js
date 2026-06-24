@@ -256,7 +256,7 @@ function generateRandomBeepTimes(){
 }
 
 function updateStatusWaiting(){
-  statusText.textContent = i18n[currentLang].status_waiting;
+  statusText.classList.add("status-fixed");
 }
 
 function armRound(isFinal){
