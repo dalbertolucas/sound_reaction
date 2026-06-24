@@ -260,12 +260,12 @@ function updateStatusWaiting(){
 }
 
 function armRound(isFinal){
-  const dict = i18n[currentLang];
   armed = true;
   claimed = false;
   finalRound = isFinal;
 
-  statusText.textContent = isFinal ? dict.status_final : "";
+  statusText.textContent = i18n[currentLang].status_waiting;
+
   playBeep(
     isFinal ? 1200 : 880,
     isFinal ? FINAL_BEEP_DURATION_MS : BEEP_DURATION_MS
@@ -275,7 +275,7 @@ function armRound(isFinal){
 function disarmRound(){
   armed = false;
   finalRound = false;
-  statusText.textContent = "";
+  updateStatusWaiting();
 }
 
 function awardBlue(points){
