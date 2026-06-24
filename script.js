@@ -4,6 +4,10 @@ const POINTS_BEEP = 5;
 const PENALTY_EARLY = -2;
 const POINTS_FINAL = 12;
 
+const BEEP_VOLUME = 0.85;
+const BEEP_DURATION_MS = 350;
+const FINAL_BEEP_DURATION_MS = 500;
+
 /* ===== UI adaptativa =====
    Menu/fim: escala 1.0 se couber, reduz se tela apertar
    Jogo: base 0.75, mas reduz se a tela apertar
@@ -202,7 +206,7 @@ function ensureAudioUnlocked(){
   } catch (_) {}
 }
 
-function playBeep(freq = 880, durationMs = 120){
+function playBeep(freq = 880, durationMs = BEEP_DURATION_MS){
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   if(!AudioCtx) return;
 
@@ -214,15 +218,17 @@ function playBeep(freq = 880, durationMs = 120){
   o.frequency.value = freq;
 
   const now = ctx.currentTime;
+
   g.gain.setValueAtTime(0.0001, now);
-  g.gain.exponentialRampToValueAtTime(0.25, now + 0.01);
-  g.gain.exponentialRampToValueAtTime(0.0001, now + (durationMs/1000));
+  g.gain.exponentialRampToValueAtTime(BEEP_VOLUME, now + 0.01);
+  g.gain.setValueAtTime(BEEP_VOLUME, now + (durationMs / 1000) - 0.04);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + (durationMs / 1000));
 
   o.connect(g);
   g.connect(ctx.destination);
 
   o.start(now);
-  o.stop(now + (durationMs/1000) + 0.02);
+  o.stop(now + (durationMs / 1000) + 0.02);
 
   o.onended = () => ctx.close();
 }
@@ -259,8 +265,11 @@ function armRound(isFinal){
   claimed = false;
   finalRound = isFinal;
 
-  statusText.textContent = isFinal ? dict.status_final : dict.status_go;
-  playBeep(isFinal ? 1200 : 880, isFinal ? 160 : 120);
+  statusText.textContent = isFinal ? dict.status_final : "";
+  playBeep(
+    isFinal ? 1200 : 880,
+    isFinal ? FINAL_BEEP_DURATION_MS : BEEP_DURATION_MS
+  );
 }
 
 function disarmRound(){
